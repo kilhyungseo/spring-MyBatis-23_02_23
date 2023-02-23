@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="com.hyungseo.root.dao.Mapper">
+	<insert id="joinDao">
+		INSERT INTO batis_member(mid, mpw, mname, memail) values(#{param1}, #{param2}, #{param3}, #{param4})
+	</insert>
+	
+	<!-- 회원 로그인시 아이디 비번 체크 SQL -->
+	<select id="loginCheck" resultType="int">
+		SELECT count(*) FROM batis_member WHERE mid=#{param1} AND mpw=#{param2}
+	</select>
+	<!-- 특정 아이디의 회원 정보 가져오기 sql -->
+	<select id="memberInfo" resultType="com.hyungseo.root.dto.MemberDto">
+		SELECT * FROM batis_member WHERE mid=#{param1}
+	</select>
+	<!-- 특정 아이디로 회원 탈퇴 -->
+	<delete id="memberDelete">
+		DELETE FROM batis_member WHERE mid=#{param1}
+	</delete>
+	<!-- 게시판 글 등록 -->
+	<insert id="write">
+		INSERT INTO batis_board(bid, bmid, bmname, btitle, bcontent) values(batisboard_seq.nextval, #{param1}, #{param2}, #{param3}, #{param4})
+	</insert>
+	<!-- 게시판 글 목록 -->
+	<select id="list" resultType="com.hyungseo.root.dto.BoardDto">
+		SELECT * FROM batis_board ORDER BY bid DESC
+	</select>
+	<!-- 게시판 글 보기 -->
+	<select id="contentView" resultType="com.hyungseo.root.dto.BoardDto">
+		SELECT * FROM batis_board WHERE bid=#{param1}
+	</select>
+	<!--  게시판 글 수정 -->
+	<update id="modify">
+		UPDATE batis_board SET btitle=#{param2}, bcontent=#{param3} WHERE bid=#{param1}
+	</update>
+	<!--  게시판 글 삭제 -->
+	<update id="delete">
+		DELETE FROM batis_board WHERE bid=#{param1}
+	</update>
+
+</mapper>   
